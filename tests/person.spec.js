@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { Person } from '../src/Person';
-import allure from '@playwright/test-allure-reporter';
+#import allure from '@playwright/test-allure-reporter';
+import * as allure from "allure-js-commons";
 
 // Массив с тестовыми данными, аналог dataProvider в PHP
 const damageDataProvider = [
