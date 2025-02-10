@@ -50,7 +50,7 @@ jobs:
       - name: Install npm
         run: npm install
 
-    # Устанавливаем allurectl через GitHub Action
+    # Устанавливаем allurectl
       - name: Install allurectl
         uses: allure-framework/setup-allurectl@v1
         with:
@@ -59,18 +59,21 @@ jobs:
           allure-project-id: ${{ env.ALLURE_PROJECT_ID }}
       
       - name: remove old directoryes
-        run: |
-          rm -rf allure-results .allure
-          npx playwright test
+        run:
+          rm -rf allure-results .allure  
 
-      #- name: Run tests with Allure TestOps
-      #  run: allurectl watch -- npm test
-      #  continue-on-error: true
-      #  env:
-      #      BRANCH: ${{ github.ref_name }}
-      #      ENDPOINT: ${{ env.ALLURE_ENDPOINT }}
-      #      BROWSER: ${{ github.event.inputs.BROWSER}}
-      #      OS: ${{ github.event.inputs.OS}}
+      - name: start playwright test
+        run:
+          npx playwright test
+          
+      - name: Run tests with Allure TestOps
+        run: allurectl watch -- npm test
+        continue-on-error: true
+        env:
+            BRANCH: ${{ github.ref_name }}
+            ENDPOINT: ${{ env.ALLURE_ENDPOINT }}
+            BROWSER: ${{ github.event.inputs.BROWSER}}
+            OS: ${{ github.event.inputs.OS}}
     
       #- name: Запуск тестов с allurectl
       #  run: allurectl watch -- npx playwright test --no-testplan 
