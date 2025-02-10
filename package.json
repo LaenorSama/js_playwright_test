@@ -1,12 +1,17 @@
 {
-  "name": "my-playwright-project",
+  "name": "playwright-npm-esm-js",
+  "type": "module",  
   "version": "1.0.0",
+  "description": "",
   "scripts": {
-    "test": "playwright test --reporter=allure-playwright",
-    "allure": "allure serve allure-results"
+    "test": "playwright test"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.42.0",
-    "allure-playwright": "^2.0.0"
+    "@playwright/test": "^1.48.2",
+    "allure-playwright": "^3.0.6",
+    "allure-js-commons": "^3.0.6"
   }
 }
