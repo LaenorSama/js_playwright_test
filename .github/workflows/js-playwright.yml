@@ -58,12 +58,19 @@ jobs:
           allure-token: ${{ env.ALLURE_TOKEN }}
           allure-project-id: ${{ env.ALLURE_PROJECT_ID }}
 
-      - name: Run tests with Allure TestOps
-        run: allurectl watch -- npm test
-        continue-on-error: true
+      #- name: Run tests with Allure TestOps
+      #  run: allurectl watch -- npm test
+      #  continue-on-error: true
+      #  env:
+      #      BRANCH: ${{ github.ref_name }}
+      #      ENDPOINT: ${{ env.ALLURE_ENDPOINT }}
+      #      BROWSER: ${{ github.event.inputs.BROWSER}}
+      #      OS: ${{ github.event.inputs.OS}}
+    
+      - name: Запуск тестов с allurectl
+        run: allurectl watch -- npx playwright test --project=chromium
         env:
             BRANCH: ${{ github.ref_name }}
             ENDPOINT: ${{ env.ALLURE_ENDPOINT }}
             BROWSER: ${{ github.event.inputs.BROWSER}}
             OS: ${{ github.event.inputs.OS}}
-        
