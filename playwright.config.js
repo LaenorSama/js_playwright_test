@@ -4,8 +4,7 @@ export default defineConfig({
   testDir: "./test",
   reporter: [
     ["list"],
-    ["allure-playwright", { resultsDir: "./out/allure-results", environmentInfo: { node_version: process.version } } ],
-    noTestPlan: true
+    ["allure-playwright", { resultsDir: "./out/allure-results", environmentInfo: { node_version: process.version, }, noTestPlan: true }, ],
             ],
-  projects: [ { name: "chromium", use: {...devices["Desktop Chrome"] } } ],
+  projects: [ { name: "chromium", use: {...devices["Desktop Chrome"], }, }, ],
 });
