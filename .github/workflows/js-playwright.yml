@@ -1,1 +1,69 @@
-npm install @playwright/test allure-playwright
+name: Allure Report
+run-name: ${{ github.actor }} is creating Allure report 🚀
+
+# переменные окружения
+env:
+    ALLURE_ENDPOINT: https://demo.qatools.cloud/
+    ALLURE_PROJECT_ID: 165
+    ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
+    ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+    ALLURE_RESULTS: "build/allure-results"
+    
+on:
+  #push:
+  #  branches-ignore:
+  #    - '!main'
+
+# вручную    
+  workflow_dispatch:
+    inputs:
+      BROWSER:
+        description: Browser
+        required: false
+        default: "OperaGX"
+      OS:
+        description: OS
+        required: false
+        default: "Win_11"
+
+
+
+#permissions: write-all
+
+jobs:
+  autotests:
+    name: Run tests and generate Allure Report 
+    runs-on: ubuntu-latest
+
+    steps:
+    # чекаут
+      - name: Clone repository
+        uses: actions/checkout@v4.2.2
+
+    # установка node.js и зависимостей
+      - name: Set up Node 20
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install npm
+        run: npm install
+
+    # Устанавливаем allurectl через GitHub Action
+      - name: Install allurectl
+        uses: allure-framework/setup-allurectl@v1
+        with:
+          allure-endpoint: ${{ env.ALLURE_ENDPOINT }}
+          allure-token: ${{ env.ALLURE_TOKEN }}
+          allure-project-id: ${{ env.ALLURE_PROJECT_ID }}
+
+      - name: Run tests with Allure TestOps
+        run: allurectl watch -- npm test
+        continue-on-error: true
+          env:
+            BRANCH: ${{ github.ref_name }}
+            ENDPOINT: ${{ env.ALLURE_ENDPOINT }}
+            BROWSER: ${{ github.event.inputs.BROWSER}}
+            OS: ${{ github.event.inputs.OS}}
+        
