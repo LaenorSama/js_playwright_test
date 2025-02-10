@@ -7,7 +7,7 @@ env:
     ALLURE_PROJECT_ID: 165
     ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
     ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
-    ALLURE_RESULTS: "build/allure-results"
+    ALLURE_RESULTS: "./out/allure-results"
     
 on:
   #push:
