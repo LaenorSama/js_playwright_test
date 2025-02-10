@@ -28,7 +28,7 @@ on:
 
 
 
-#permissions: write-all
+permissions: write-all
 
 jobs:
   autotests:
