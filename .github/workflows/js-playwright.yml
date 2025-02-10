@@ -65,10 +65,10 @@ jobs:
         run:
           rm -rf allure-results .allure  
 
-      - name: start playwright test
-        run: |
-          npx playwright test 
-          continue-on-error: true
+      #- name: start playwright test
+      # run: |
+      #    npx playwright test 
+      #    continue-on-error: true
           
       - name: Run tests with Allure TestOps
         run: allurectl watch -- npm test
