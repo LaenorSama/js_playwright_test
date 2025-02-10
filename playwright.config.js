@@ -1,1 +1,12 @@
-playwright.config.js
+export default defineConfig({
+  // ...
+  reporter: [
+    ["line"],
+    [
+      "allure-playwright",
+      {
+        resultsDir: "allure-results",
+      },
+    ],
+  ],
+});
