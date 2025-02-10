@@ -61,7 +61,7 @@ jobs:
       - name: Run tests with Allure TestOps
         run: allurectl watch -- npm test
         continue-on-error: true
-          env:
+        env:
             BRANCH: ${{ github.ref_name }}
             ENDPOINT: ${{ env.ALLURE_ENDPOINT }}
             BROWSER: ${{ github.event.inputs.BROWSER}}
