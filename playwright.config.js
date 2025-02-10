@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
-  testDir: "./test",
+  testDir: "./tests",
   reporter: [
     ["list"],
     ["allure-playwright", { resultsDir: "./out/allure-results", environmentInfo: { node_version: process.version, }, noTestPlan: true }, ],
