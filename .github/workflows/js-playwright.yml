@@ -59,7 +59,7 @@ jobs:
           allure-project-id: ${{ env.ALLURE_PROJECT_ID }}
 
       - name: Run tests with Allure TestOps
-        run: allurectl watch --npm test
+        run: allurectl watch -- npm test
         continue-on-error: true
         env:
       #      BRANCH: ${{ github.ref_name }}
