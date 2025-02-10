@@ -49,6 +49,9 @@ jobs:
 
       - name: Install npm
         run: npm install
+        
+      - name: install allure-playwright
+        run: npm install allure-playwright --save-dev
 
     # Устанавливаем allurectl
       - name: Install allurectl
