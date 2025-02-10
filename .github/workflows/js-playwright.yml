@@ -68,7 +68,7 @@ jobs:
       #      OS: ${{ github.event.inputs.OS}}
     
       - name: Запуск тестов с allurectl
-        run: allurectl watch -- npx playwright test --project=chromium
+        run: allurectl watch -- npx playwright test
         env:
             BRANCH: ${{ github.ref_name }}
             ENDPOINT: ${{ env.ALLURE_ENDPOINT }}
