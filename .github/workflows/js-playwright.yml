@@ -59,7 +59,7 @@ jobs:
           allure-project-id: ${{ env.ALLURE_PROJECT_ID }}
       
       - name: remove old directoryes
-        run:
+        run: |
           rm -rf allure-results .allure
           npx playwright test
 
