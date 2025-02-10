@@ -22,8 +22,8 @@ test.describe('Тестирование персонажа', () => {
       allure.story('Чистый урон');
 
       // Добавляем параметры в отчет Allure
-      allure.parameter('damage', damage);
-      allure.parameter('expectedHp', expectedHp);
+      allure.parameter('damage', String(damage));
+      allure.parameter('expectedHp', String(expectedHp));
 
       // Шаг 1: Создание персонажа
       const person = new Person('Alex');
