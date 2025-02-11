@@ -7,7 +7,7 @@ env:
     ALLURE_ENDPOINT: https://demo.qatools.cloud/
     ALLURE_PROJECT_ID: 165
     ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
-    ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+    #ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
     ALLURE_RESULTS: "./out/allure-results"
     
 on:
