@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { Person } from '../src/Person';
-import { allure } from "allure-playwright";
+//import { allure } from "allure-playwright";
 import * as allure from "allure-js-commons";
 
 // Массив с тестовыми данными
