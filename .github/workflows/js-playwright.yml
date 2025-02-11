@@ -11,6 +11,13 @@ env:
     ALLURE_RESULTS: "./out/allure-results"
     
 on:
+ #пуш и пулл реквест
+  push:
+     branches:
+      - main
+  pull_request:
+    branches:
+      - main
   #push:
   #  branches-ignore:
   #    - '!main'
