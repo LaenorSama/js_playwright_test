@@ -4,5 +4,5 @@ export default defineConfig({
   testDir: "./tests",
   reporter: [
     ["list"],
-    ["allure-playwright", { resultsDir: "./out/allure-results" } ],
+    ["allure-playwright", { resultsDir: "./out/allure-results" }, ],
 });
