@@ -66,7 +66,7 @@ test.describe('Тестирование персонажа', () => {
   }
 });
 
-test('Ручной тест @allure.manual() @allure.id:529', async () => {
+test('Ручной тест @allure.manual:true @allure.id:529', async () => {
   // Уникальный идентификатор для синхронизации с Allure TestOps
   allure.epic('Ручное тестирование');
   allure.feature('Пример ручного теста');
