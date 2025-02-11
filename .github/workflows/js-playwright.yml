@@ -90,8 +90,8 @@ jobs:
         env:
             BRANCH: ${{ github.ref_name }}
             ENDPOINT: ${{ env.ALLURE_ENDPOINT }}
-            BROWSER: ${{ github.event.inputs.BROWSER}}
-            OS: ${{ github.event.inputs.OS}}
+            #BROWSER: ${{ github.event.inputs.BROWSER}}
+            #OS: ${{ github.event.inputs.OS}}
     
       #- name: Запуск тестов с allurectl
       #  run: allurectl watch -- npx playwright test --no-testplan 
