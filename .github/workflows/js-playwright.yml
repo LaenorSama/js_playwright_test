@@ -9,7 +9,9 @@ env:
     ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
     #ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
     ALLURE_RESULTS: "./out/allure-results"
-    
+    BROWSER: ${{ inputs.BROWSER || "OperaGX" }}
+    OS: ${{ inputs.OS || "Win_11" }}
+    LAUNCH_TYPE: ${{ inputs.LAUNCH_TYPE || "push" }}
 on:
  #пуш и пулл реквест
   push:
@@ -33,6 +35,10 @@ on:
         description: OS
         required: false
         default: "Win_11"
+      LAUNCH_TYPE:
+        description: LAUNCH_TYPE
+        required: false
+        default: "manual"
 
 
 
