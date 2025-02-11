@@ -5,6 +5,7 @@ name: testops_playwright_test
 # переменные окружения
 env:
     ALLURE_ENDPOINT: https://demo.qatools.cloud/
+    ENDPOINT: https://demo.qatools.cloud/
     ALLURE_PROJECT_ID: 165
     ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
     #ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
@@ -12,6 +13,7 @@ env:
     BROWSER: ${{ inputs.BROWSER || 'OperaGX' }}
     OS: ${{ inputs.OS || 'Win_11' }}
     LAUNCH_TYPE: ${{ inputs.LAUNCH_TYPE || 'push' }}
+    BRANCH: ${{ github.ref_name }}
 on:
  #пуш и пулл реквест
   push:
@@ -87,9 +89,9 @@ jobs:
       - name: Run tests with Allure TestOps
         run: allurectl watch -- npm test
         continue-on-error: true
-        env:
-            BRANCH: ${{ github.ref_name }}
-            ENDPOINT: ${{ env.ALLURE_ENDPOINT }}
+        #env:
+            #BRANCH: ${{ github.ref_name }}
+            #ENDPOINT: ${{ env.ALLURE_ENDPOINT }}
             #BROWSER: ${{ github.event.inputs.BROWSER}}
             #OS: ${{ github.event.inputs.OS}}
     
