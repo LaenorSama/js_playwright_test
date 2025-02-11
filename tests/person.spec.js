@@ -1,4 +1,4 @@
-import { test } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import { Person } from '../src/Person';
 import { allure } from "allure-playwright"; // Используем правильный Allure плагин
 
