@@ -17,6 +17,7 @@ const ERROR_TYPES = ['IndexError', 'ValueError', 'TypeError', 'KeyError'];
 test.describe('Тестирование персонажа', () => {
   for (const { damage, expectedHp } of damageDataProvider) {
     test(`Персонаж получает ${damage} урона, ожидаемое HP: ${expectedHp}`, async () => {
+      allure.owner("Alex");
       allure.epic('Боевая система');
       allure.feature('Получение урона');
       allure.story('Чистый урон');
