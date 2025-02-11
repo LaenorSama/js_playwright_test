@@ -14,32 +14,31 @@ const damageDataProvider = [
 const ERROR_TYPES = ['IndexError', 'ValueError', 'TypeError', 'KeyError'];
 
 test.describe('Тестирование персонажа', () => {
-  test('Тест персонажа с разными параметрами урона', async () => {
-    allure.epic('Боевая система');
-    allure.feature('Получение урона');
-    allure.story('Чистый урон');
+  // Параметризуем тесты на основе dataProvider
+  for (const { damage, expectedHp } of damageDataProvider) {
+    test(`Персонаж получает ${damage} урона, ожидаемое HP: ${expectedHp}`, async () => {
+      allure.epic('Боевая система');
+      allure.feature('Получение урона');
+      allure.story('Чистый урон');
 
-    for (const { damage, expectedHp } of damageDataProvider) {
-      await allure.step(`Персонаж получает ${damage} урона, ожидаемое HP: ${expectedHp}`, async () => {
-        // Добавляем параметры в отчет Allure
-        allure.parameter('damage', String(damage));
-        allure.parameter('expectedHp', String(expectedHp));
+      // Добавляем параметры в отчет Allure
+      allure.parameter('damage', String(damage));
+      allure.parameter('expectedHp', String(expectedHp));
 
-        // Шаг 1: Создание персонажа
-        const person = new Person('Alex');
-        await step1CreatePerson(person, 'Alex');
+      // Шаг 1: Создание персонажа
+      const person = new Person('Alex');
+      await step1CreatePerson(person, 'Alex');
 
-        // Шаг 2: Проверка стартового HP
-        await step2CheckBaseHealth(person, 10);
+      // Шаг 2: Проверка стартового HP
+      await step2CheckBaseHealth(person, 10);
 
-        // Шаг 3: Нанесение урона
-        await step3ApplyDamage(person, damage, expectedHp);
+      // Шаг 3: Нанесение урона
+      await step3ApplyDamage(person, damage, expectedHp);
 
-        // Шаг 4: Случайная ошибка (20% шанс)
-        await step4IntroduceRandomError();
-      });
-    }
-  });
+      // Шаг 4: Случайная ошибка (20% шанс)
+      await step4IntroduceRandomError();
+    });
+  }
 });
 
 // Функции шагов для Allure
