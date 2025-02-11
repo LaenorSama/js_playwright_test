@@ -92,7 +92,6 @@ test('Ручной тест @allure.manual:true @allure.id:529', async () => {
 test.describe('Запуск ручного теста', () => {
   test('Запуск ручного теста', async ({}) => {
     // Добавляем информацию для Allure
-    allure.title('Запуск ручного теста.');
     allure.manual();
 
     // Создаем шаг в отчете Allure
