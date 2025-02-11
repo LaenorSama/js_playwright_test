@@ -1,5 +1,6 @@
+# Название workflow
 name: testops_playwright_test
-run-name: ${{ github.actor }} is creating Allure report 🚀
+# run-name: ${{ github.actor }} is creating Allure report 🚀
 
 # переменные окружения
 env:
