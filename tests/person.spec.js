@@ -70,9 +70,9 @@ test('Ручной тест через allure.manual()', async () => {
   // Уникальный идентификатор для синхронизации с Allure TestOps
   allure.epic('Ручное тестирование');
   allure.feature('Пример ручного теста');
-
+  allure.ID('529');
   // Указываем, что тест является ручным
-  allure.manual("True");
+  //allure.manual("True");
 
   allure.description('Этот тест требует выполнения вручную.');
 
