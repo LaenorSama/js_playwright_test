@@ -1,4 +1,4 @@
-name: Allure Report
+name: testops_playwright_test
 run-name: ${{ github.actor }} is creating Allure report 🚀
 
 # переменные окружения
