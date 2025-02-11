@@ -28,10 +28,6 @@ on:
 # вручную    
   workflow_dispatch:
     inputs:
-      #ENDPOINT:
-      #  description: "Endpoint"
-      #  required: false
-      #  default: "https://demo.qatools.cloud/"
       BROWSER:
         description: Browser
         required: false
@@ -48,12 +44,6 @@ on:
         description: "ALLURE_USERNAME - service parameter (leave blank)"
         required: false
         default: ""
-      #BRANCH:
-      #  description: "Git branch (filled automatically)"
-      #  required: false
-      #  default: ""
-
-
 
 permissions: write-all
 
@@ -61,11 +51,6 @@ jobs:
   autotests:
     name: Run tests and generate Allure Report 
     runs-on: ubuntu-latest
-
-    # указываем ветку на которой запускаем воркфлоу
-    #env:
-    #  BRANCH: ${{ inputs.BRANCH != '' && inputs.BRANCH || github.ref_name }}
-    #  #BRANCH: ${{ github.ref_name }}
       
     steps:
     # чекаут
@@ -105,12 +90,12 @@ jobs:
       - name: Run tests with Allure TestOps
         run: allurectl watch -- npm test
         continue-on-error: true
-        env:
-            BRANCH: ${{ github.ref_name }}
-            ENDPOINT: ${{ env.ALLURE_ENDPOINT }}
-            BROWSER: ${{ github.event.inputs.BROWSER}}
-            OS: ${{ github.event.inputs.OS}}
-            ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+        #env:
+        #    BRANCH: ${{ github.ref_name }}
+        #    ENDPOINT: ${{ env.ALLURE_ENDPOINT }}
+        #    BROWSER: ${{ github.event.inputs.BROWSER}}
+        #    OS: ${{ github.event.inputs.OS}}
+        #    ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
     
       #- name: Запуск тестов с allurectl
       #  run: allurectl watch -- npx playwright test --no-testplan 
