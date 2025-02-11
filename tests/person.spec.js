@@ -72,7 +72,7 @@ test('Ручной тест через allure.manual()', async () => {
   allure.feature('Пример ручного теста');
 
   // Указываем, что тест является ручным
-  allure.manual(True);
+  allure.manual("True");
 
   allure.description('Этот тест требует выполнения вручную.');
 
