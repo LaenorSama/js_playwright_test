@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { Person } from '../src/Person';
 import { allure } from "allure-playwright";
 
-// Массив с тестовыми данными
+// Список тестовых данных
 const damageDataProvider = [
   { damage: 1, expectedHp: 9 },
   { damage: 2, expectedHp: 8 },
@@ -13,9 +13,10 @@ const damageDataProvider = [
 // Список случайных ошибок
 const ERROR_TYPES = ['IndexError', 'ValueError', 'TypeError', 'KeyError'];
 
-test.describe('Проверка получения урона', () => {
-  test('Нанесение урона персонажу', async ({}, testInfo) => {
-    for (const { damage, expectedHp } of damageDataProvider) {
+test.describe.parallel('Проверка получения урона', () => {
+  test.each(damageDataProvider)(
+    'JS Нанесение урона $damage (Ожидаемый HP: $expectedHp)',
+    async ({ damage, expectedHp }) => {
       allure.owner('Alex');
       allure.epic('Боевая система');
       allure.feature('Получение урона');
@@ -25,36 +26,31 @@ test.describe('Проверка получения урона', () => {
       allure.parameter('damage', String(damage));
       allure.parameter('expectedHp', String(expectedHp));
 
-      await test.step(`Создание персонажа`, async () => {
-        const person = new Person('Alex');
-        expect(person.getName()).toBe('Alex');
+      // Шаг 1: Создание персонажа
+      const person = new Person('Alex');
+      expect(person.getName()).toBe('Alex');
 
-        allure.attachment(
-          'Лог операции',
-          `Создан персонаж ${person.getName()} с ${person.getHp()} HP`,
-          'text/plain'
-        );
-        expect(person.getHp()).toBe(10);
+      allure.attachment(
+        'Лог операции',
+        `Создан персонаж ${person.getName()} с ${person.getHp()} HP`,
+        'text/plain'
+      );
+      expect(person.getHp()).toBe(10);
 
-        // Шаг 2: Нанесение урона
-        await test.step(`Наносим ${damage} урона`, async () => {
-          person.takeTrueDamage(damage);
-          allure.attachment(
-            'Лог операции',
-            `Персонажу ${person.getName()} нанесен урон ${damage}, осталось HP: ${person.getHp()}`,
-            'text/plain'
-          );
-          expect(person.getHp()).toBe(expectedHp);
-        });
+      // Шаг 2: Нанесение урона
+      person.takeTrueDamage(damage);
+      allure.attachment(
+        'Лог операции',
+        `Персонажу ${person.getName()} нанесен урон ${damage}, осталось HP: ${person.getHp()}`,
+        'text/plain'
+      );
+      expect(person.getHp()).toBe(expectedHp);
 
-        // Шаг 3: Генерация случайной ошибки (20% шанс)
-        await test.step('Генерация случайной ошибки', async () => {
-          if (Math.random() < 0.2) {
-            const errorType = ERROR_TYPES[Math.floor(Math.random() * ERROR_TYPES.length)];
-            throw new Error(`Случайная ошибка: ${errorType}`);
-          }
-        });
-      });
+      // Шаг 3: Генерация случайной ошибки (20% шанс)
+      if (Math.random() < 0.2) {
+        const errorType = ERROR_TYPES[Math.floor(Math.random() * ERROR_TYPES.length)];
+        throw new Error(`Случайная ошибка: ${errorType}`);
+      }
     }
-  });
+  );
 });
