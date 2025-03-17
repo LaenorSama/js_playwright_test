@@ -13,10 +13,9 @@ const damageDataProvider = [
 const ERROR_TYPES = ['IndexError', 'ValueError', 'TypeError', 'KeyError'];
 
 test.describe('Проверка получения урона', () => {
-  // Используем test.each для параметризации теста с одинаковым названием для всех тестов
-  test.each(damageDataProvider)(
-    'JS Тест повреждения', // Статичное название для всех тестов
-    async ({ damage, expectedHp }) => {
+  // Используем цикл для параметризации тестов
+  damageDataProvider.forEach(({ damage, expectedHp }) => {
+    test(`JS Нанесение урона ${damage} (Ожидаемый HP: ${expectedHp})`, async () => {
       allure.owner('Alex');
       allure.epic('Боевая система');
       allure.feature('Получение урона');
@@ -40,6 +39,6 @@ test.describe('Проверка получения урона', () => {
         const errorType = ERROR_TYPES[Math.floor(Math.random() * ERROR_TYPES.length)];
         throw new Error(`Случайная ошибка: ${errorType}`);
       }
-    }
-  );
+    });
+  });
 });
