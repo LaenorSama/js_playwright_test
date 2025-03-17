@@ -11,10 +11,9 @@ const damageDataProvider = [
 ];
 
 test.describe('Проверка получения урона', () => {
-  // Используем test.each для параметризации с разными названиями для каждого теста
-  test.each(damageDataProvider)(
-    'JS Нанесение урона $damage (Ожидаемый HP: $expectedHp)',
-    async ({ damage, expectedHp }) => {
+  // Используем обычный цикл for для параметризации
+  for (const { damage, expectedHp } of damageDataProvider) {
+    test(`JS Нанесение урона ${damage} (Ожидаемый HP: ${expectedHp})`, async () => {
       // Устанавливаем описание и параметры в Allure
       allure.owner('Alex');
       allure.epic('Боевая система');
@@ -59,6 +58,6 @@ test.describe('Проверка получения урона', () => {
           throw new Error(`Случайная ошибка: ${errorType}`);
         }
       });
-    }
-  );
+    });
+  }
 });
