@@ -1,40 +1,37 @@
 import { test, expect } from '@playwright/test';
-import { allure } from 'allure-playwright';
-import { Person } from '../src/Person';  // Импортируем класс Person
+import * as allure from 'allure-js-commons';
+import { Person } from '../src/Person'; // предполагаем, что у вас есть класс Person
 
-// Массив с тестовыми данными (damage и expectedHp)
+// Массив с данными для теста
 const damageDataProvider = [
   { damage: 1, expectedHp: 9 },
   { damage: 2, expectedHp: 8 },
   { damage: 3, expectedHp: 7 },
-  { damage: 4, expectedHp: 8 },
+  { damage: 4, expectedHp: 6 },
 ];
 
-// Список случайных ошибок
-const ERROR_TYPES = ['IndexError', 'ValueError', 'TypeError', 'KeyError'];
+test.describe('Проверка получения урона', () => {
+  // Используем test.each для параметризации с разными названиями для каждого теста
+  test.each(damageDataProvider)(
+    'JS Нанесение урона $damage (Ожидаемый HP: $expectedHp)',
+    async ({ damage, expectedHp }) => {
+      // Устанавливаем описание и параметры в Allure
+      allure.owner('Alex');
+      allure.epic('Боевая система');
+      allure.feature('Получение урона');
+      allure.story('Чистый урон');
+      allure.parameter('damage', String(damage));
+      allure.parameter('expectedHp', String(expectedHp));
 
-// Один тест с несколькими параметрами
-test('JS Нанесение урона с разными параметрами', async () => {
-  // Добавляем параметры в отчет Allure
-  allure.owner('Alex');
-  allure.epic('Боевая система');
-  allure.feature('Получение урона');
-  allure.story('Чистый урон');
-
-  // Проходим по всем тестовым данным и для каждого создаем шаги
-  for (const { damage, expectedHp } of damageDataProvider) {
-    // Добавляем параметры для каждого теста в Allure
-    allure.parameter('damage', String(damage));
-    allure.parameter('expectedHp', String(expectedHp));
-
-    // Шаг 1: Создание персонажа
-    await allure.step(`Шаг 1. Проверяем, что создан объект персонажа для damage=${damage}`, () => {
+      // Шаг 1: Создание персонажа
       const person = new Person('Alex');
-      expect(person.getName()).toBe('Alex');
-      return person; // Возвращаем объект персонажа
-    }).then(async (person) => {
+      await allure.step('Шаг 1. Проверяем, что создан объект персонажа', () => {
+        expect(person.getName()).toBe('Alex');
+        expect(person.getHp()).toBe(10);
+      });
+
       // Шаг 2: Проверка стартового HP
-      await allure.step(`Шаг 2. Проверяем, что базовое здоровье 10 для damage=${damage}`, () => {
+      await allure.step('Шаг 2. Проверяем, что базовое здоровье 10', () => {
         allure.attachment(
           'Лог операции',
           `Создан персонаж ${person.getName()} с ${person.getHp()} HP`,
@@ -44,10 +41,8 @@ test('JS Нанесение урона с разными параметрами'
       });
 
       // Шаг 3: Нанесение урона
-      await allure.step(`Шаг 3. Проверяем, что урон ${damage} проходит для ожидаемого HP=${expectedHp}`, () => {
-        if (Math.random() < 0.95) {
-          person.takeTrueDamage(damage);
-        }
+      await allure.step('Шаг 3. Проверяем, что урон проходит', () => {
+        person.takeTrueDamage(damage);
         allure.attachment(
           'Лог операции',
           `Персонажу ${person.getName()} нанесен урон ${damage}, осталось HP: ${person.getHp()}`,
@@ -57,12 +52,13 @@ test('JS Нанесение урона с разными параметрами'
       });
 
       // Шаг 4: Случайная ошибка (20% шанс)
-      await allure.step(`Шаг 4. Генерация случайной ошибки для damage=${damage}`, () => {
+      await allure.step('Шаг 4. Генерация случайной ошибки', () => {
         if (Math.random() < 0.2) {
+          const ERROR_TYPES = ['IndexError', 'ValueError', 'TypeError', 'KeyError'];
           const errorType = ERROR_TYPES[Math.floor(Math.random() * ERROR_TYPES.length)];
           throw new Error(`Случайная ошибка: ${errorType}`);
         }
       });
-    });
-  }
+    }
+  );
 });
