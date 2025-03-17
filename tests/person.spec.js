@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { Person } from '../src/Person';
 import { allure } from "allure-playwright";
 
-// Тестовые данные
+// Массив с тестовыми данными
 const damageDataProvider = [
   { damage: 1, expectedHp: 9 },
   { damage: 2, expectedHp: 8 },
@@ -10,25 +10,26 @@ const damageDataProvider = [
   { damage: 4, expectedHp: 6 },
 ];
 
-// Ошибки для случайного теста
+// Список случайных ошибок
 const ERROR_TYPES = ['IndexError', 'ValueError', 'TypeError', 'KeyError'];
 
-test.describe.parallel('Проверка получения урона', () => {
-  damageDataProvider.forEach(({ damage, expectedHp }) => {
-    test(`JS Нанесение урона ${damage} (Ожидаемый HP: ${expectedHp})`, async ({}) => {
+// Основной блок тестов
+test.describe('Проверка получения урона', () => {
+  test.each(damageDataProvider)(
+    'JS Нанесение урона $damage (Ожидаемый HP: $expectedHp)', 
+    async ({ damage, expectedHp }) => {
       allure.owner('Alex');
       allure.epic('Боевая система');
       allure.feature('Получение урона');
       allure.story('Чистый урон');
 
-      // Добавляем параметры в Allure
+      // Добавляем параметры в отчет Allure
       allure.parameter('damage', String(damage));
       allure.parameter('expectedHp', String(expectedHp));
 
-      // Создание персонажа
+      // Шаг 1: Создание персонажа
       const person = new Person('Alex');
       expect(person.getName()).toBe('Alex');
-
       allure.attachment(
         'Лог операции',
         `Создан персонаж ${person.getName()} с ${person.getHp()} HP`,
@@ -36,7 +37,7 @@ test.describe.parallel('Проверка получения урона', () => {
       );
       expect(person.getHp()).toBe(10);
 
-      // Нанесение урона
+      // Шаг 2: Нанесение урона
       person.takeTrueDamage(damage);
       allure.attachment(
         'Лог операции',
@@ -45,11 +46,11 @@ test.describe.parallel('Проверка получения урона', () => {
       );
       expect(person.getHp()).toBe(expectedHp);
 
-      // Случайная ошибка (20% шанс)
+      // Шаг 3: Генерация случайной ошибки (20% шанс)
       if (Math.random() < 0.2) {
         const errorType = ERROR_TYPES[Math.floor(Math.random() * ERROR_TYPES.length)];
         throw new Error(`Случайная ошибка: ${errorType}`);
       }
-    });
-  });
+    }
+  );
 });
