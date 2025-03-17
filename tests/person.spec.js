@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test';
+import { allure } from 'allure-playwright';  // Импортируем allure
+
 import { Person } from '../src/Person';
 
 // Массив с тестовыми данными
